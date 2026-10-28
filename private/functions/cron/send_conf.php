@@ -5,7 +5,7 @@ require_once(base_path("../secure/env/config.php"));
 require_once(base_path('classes/Database.php'));
 require_once(base_path("functions/email/send_confirmation_email.php"));
 include_once(base_path('../secure/secure_id/secure_id_ut.php'));
-$log_path = base_path("../secure/logs/conf_list.txt");
+$log_path = base_path("../web_assets/ut/data/conf_list.txt");
 
 use Database\Database;
 $db = new Database('mailing_list');
