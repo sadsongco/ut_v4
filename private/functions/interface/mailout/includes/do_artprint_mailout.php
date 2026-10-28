@@ -107,7 +107,7 @@ $mail->isSMTP();
 $mail->Host = $mail_auth['host'];
 $mail->SMTPAuth = true;
 $mail->SMTPKeepAlive = false; //SMTP connection will not close after each email sent, reduces SMTP overhead
-$mail->Port = 25;
+$mail->Port = $mail_auth['port'];
 $mail->Username = $mail_auth['username'];
 $mail->Password = $mail_auth['password'];
 $mail->setFrom($mail_auth['from']['address'], $from_name);

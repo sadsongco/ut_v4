@@ -20,18 +20,21 @@ function sendConfirmationEmail($row, $option=null) {
     try {
         $row['host'] = getHost();
         $row['secure_id'] = generateSecureId($row['email'], $row['email_id']);
-        $params = [...$row, "$option"=>true];
+        $params = [...$row];
+        if ($option) $params[$option] = true;
         $body = $m_emails->render('confirmationEmailHtml', $params);
         $text_body = $m_emails->render('confirmationEmailText', $params);
         $subject = 'Unbelievable Truth - confirm your email';
         require_once(base_path("../secure/mailauth/ut.php"));
 
         // mail auth
+        // $mail->SMTPDebug = SMTP::DEBUG_SERVER;  
         $mail->isSMTP();
         $mail->Host = $mail_auth['host'];
         $mail->SMTPAuth = true;
         $mail->SMTPKeepAlive = false; //SMTP connection will not close after each email sent, reduces SMTP overhead
-        $mail->Port = 25;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; 
+        $mail->Port = $mail_auth['port'];
         $mail->Username = $mail_auth['username'];
         $mail->Password = $mail_auth['password'];
         $mail->setFrom($mail_auth['from']['address'], $mail_auth['from']['name']);

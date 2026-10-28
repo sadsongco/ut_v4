@@ -217,6 +217,9 @@
       </section>
       {{/bandcamp}}
       <section>
+        {{#conf_email_resend}}
+          <p>You may have tried to register for the Unbelievable Truth email list recently, and not been able to confirm due to a site bug that I only just noticed. If so, you can now confirm using this email. If not, feel free to ignore this email, we will never contact you again.</p>
+        {{/conf_email_resend}}
         <p>Please confirm adding your email to the Unbelievable Truth email list by clicking the link below.</p>
         <p>
           <a href="{{host}}/email_management/confirm.php?email={{email}}&check={{secure_id}}">CONFIRM ADDING MY EMAIL TO THE UNBELIEVABLE TRUTH EMAIL LIST PLEASE</a>

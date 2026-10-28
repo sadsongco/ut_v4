@@ -1,7 +1,7 @@
 <?php
 
 require_once(__DIR__ . "/../functions/functions.php");
-require(base_path('classes/Database.php'));
+require_once(base_path('classes/Database.php'));
 include_once("./includes/html_head.php");
 include_once(base_path('../secure/secure_id/secure_id_ut.php'));
 
