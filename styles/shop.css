@@ -374,6 +374,40 @@ a.view-cart-items .view-cart-badge {
   color: var(--alert-colour);
 }
 
+.item-thumb {
+  cursor: pointer;
+}
+
+.fullsize-image-container {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  top: 0;
+  left: -100vw;
+  opacity: 0;
+  transition:
+    opacity 0.4s ease-in-out,
+    left 0.4s ease-in-out,
+    z-index 0.4s linear;
+  z-index: -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fullsize-image-container.show {
+  left: 0;
+  opacity: 1;
+  z-index: 11;
+}
+
+.fullsize-image-container img.responsive {
+  max-width: 80vw;
+  max-height: 80vh;
+  display: block;
+}
+
 @media screen and (max-width: 900px) {
   .col-space {
     display: block;
