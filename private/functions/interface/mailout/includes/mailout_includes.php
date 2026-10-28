@@ -9,12 +9,11 @@ if (!isset($db)) $db = new Database('mailing_list');
 require_once(base_path('../lib/mustache.php-main/src/Mustache/Autoloader.php'));
 Mustache_Autoloader::register();
 
-if (!isset($m)) {
-    $m = new Mustache_Engine(array(
-    'loader' => new Mustache_Loader_FilesystemLoader(base_path('/private/views/mailout/')),
-    'partials_loader' => new Mustache_Loader_FilesystemLoader(base_path('private/views/mailout/partials/'))
-    ));
-}
+
+$m = new Mustache_Engine(array(
+'loader' => new Mustache_Loader_FilesystemLoader(base_path('/private/views/mailout/')),
+'partials_loader' => new Mustache_Loader_FilesystemLoader(base_path('private/views/mailout/partials/'))
+));
 
 function getMailoutData($id, $db) {
     try {
