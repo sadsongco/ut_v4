@@ -6,12 +6,25 @@
                 {{#option}}
                     <select name='option_id{{#is_bundle}}[]{{/is_bundle}}' data-item_id='{{item_id}}' onchange='updateItemPrice(event)'>
                         {{#options}}
+                            {{#option_price}}
                             <option value='{{item_option_id}}' data-price='{{option_price}}'>{{option_name}}</option>
+                            {{/option_price}}
+                            {{^option_price}}
+                            <option value='{{item_option_id}}' data-price='{{price}}'>{{option_name}}</option>
+                            {{/option_price}}
                         {{/options}}
                     </select>
+                    {{#option_price}}
+                        <div id="item{{item_id}}-price">&pound;{{option_price}}</div>
+                    {{/option_price}}
+                    {{^option_price}}
+                        <div id="item{{item_id}}-price">&pound;{{price}}</div>
+                    {{/option_price}}
+                
                 {{/option}}
                 {{^option}}
                     <input type="hidden" name="option_id{{#is_bundle}}[]{{/is_bundle}}" value="">
+                    <div id="item{{item_id}}-price">&pound;{{price}}</div>
                 {{/option}}
                 {{^is_bundle}}
                     <input type="submit" value="Add Item To Cart">

@@ -23,6 +23,9 @@ if (isset($_POST['update_option'])) {
     $query = "UPDATE Item_options SET ";
     [$query, $params] = buildUpdateQuery($query, "item_option_id");
     $db->query($query, $params);
+    $query = "SELECT item_id FROM Item_options WHERE item_option_id = ?";
+    $result = $db->query($query, [$_POST['item_option_id']])->fetch();
+    $_POST['item_id'] = $result['item_id'];
 }
 
 if (isset($_POST['add_new_option'])) {

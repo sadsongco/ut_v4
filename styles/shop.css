@@ -218,6 +218,10 @@ a.view-cart-items .view-cart-badge {
     display: grid;
     grid-template-columns: auto 1fr;
   }
+
+  .shop-item.message {
+    grid-template-columns: 1fr;
+  }
 }
 
 .shop-item > * {

@@ -11,6 +11,7 @@ FROM Items
 JOIN Item_options
     ON Item_options.item_option_id = ?
 WHERE Items.item_id = ?";
+$params = [$_GET['option_id'], $_GET['item_id']];
 $item_prices = $db->query($query, [$_GET['option_id'], $_GET['item_id']])->fetch();
 
 $item_price = $item_prices['option_price'] ?? $item_prices['price'];
