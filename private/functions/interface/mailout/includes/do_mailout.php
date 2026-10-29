@@ -68,8 +68,9 @@ function mark_as_error($db, $mailing_list_table, $mailout_id, $row) {
     else $mailout_id = (int)$mailout_id;
 
     try {
-        $stmt = $db->prepare("UPDATE `$mailing_list_table` SET `error` = 1 WHERE `email_id` = ? AND `email` = ?");
-        $stmt->execute([$row['email_id'], $row['email']]);
+        $query = "UPDATE `$mailing_list_table` SET `error` = 1 WHERE `email_id` = ? AND `email` = ?";
+        $params = [$row['email_id'], $row['email']];
+        $stmt = $db->query($query, $params);
         return "$mailout_id\t::ERROR SENDING::\t".$row['email'];}
     catch(PDOException $e) {
         return "mark_as_error Database Error: " . $e->getMessage();
@@ -165,7 +166,7 @@ foreach ($result as $row) {
         $output .= "\nREMOVE: " . replaceTags($remove_path, $row);
         //Reset the connection to abort sending this message
         //The loop will continue trying to send to the rest of the list
-        echo ($output);
+        // echo ($output);
         $mail->getSMTPInstance()->reset();
     }
     //Clear all addresses and attachments for the next iteration
