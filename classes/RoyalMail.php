@@ -285,6 +285,7 @@ class RoyalMail {
         $rm_item = [
             "name"=>$item['name'],
             "SKU"=>$item['sku'],
+            "NonStandardisedManufacturerId"=>$item['sku'],
             "quantity"=>$item['quantity'],
             "unitValue"=>$item['price'],
             "unitWeightInGrams"=>(int)$item['weight'],

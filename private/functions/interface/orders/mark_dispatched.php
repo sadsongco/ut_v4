@@ -10,7 +10,7 @@ try {
         dispatched = NOW(),
         rm_order_identifier = 1,
         rm_created = NOW(),
-        rm_tracking_number = 'e_delivery'
+        rm_tracking_number = 'other'
     WHERE order_id = ?"
     :
     "UPDATE New_Orders

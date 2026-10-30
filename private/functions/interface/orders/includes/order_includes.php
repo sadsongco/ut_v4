@@ -1,6 +1,6 @@
 <?php
 
-include(__DIR__ . "/../../../../../functions/functions.php");
+include_once(__DIR__ . "/../../../../../functions/functions.php");
 
 use Database\Database;
 
