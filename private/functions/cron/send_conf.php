@@ -13,7 +13,6 @@ $db = new Database('mailing_list');
 $ids = file($log_path);
 if (sizeof($ids) == 0) exit ("Resending of confirmation email failed: No emails to resend");
 $id = (int)array_pop($ids);
-file_put_contents($log_path, $ids);
 
 try {
     $query = "SELECT * FROM ut_mailing_list WHERE email_id = ?";
@@ -32,3 +31,4 @@ try {
     exit ("Resending of confirmation email failed: " . $e->getMessage());
 }
 
+file_put_contents($log_path, $ids);
