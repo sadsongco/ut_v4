@@ -39,6 +39,11 @@ class Router
             'path' => '/comments',
             'name' => 'Comments',
             'controller' => 'comments'
+        ],
+        'utlist'=> [
+            'path' => '/utlist',
+            'name' => 'UT List',
+            'controller' => 'utlist'
         ]
     ];
     private $renderer;
