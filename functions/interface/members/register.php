@@ -33,6 +33,7 @@ function SendConfirmationEmail ($email, $selector, $token, $mail_auth) {
     $mail->Host = $mail_auth['host'];
     $mail->SMTPAuth = true;
     $mail->SMTPKeepAlive = false; //SMTP connection will not close after each email sent, reduces SMTP overhead
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; 
     $mail->Port = $mail_auth['port'];
     $mail->Username = $mail_auth['username'];
     $mail->Password = $mail_auth['password'];

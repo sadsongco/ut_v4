@@ -19,7 +19,7 @@ use PHPMailer\PHPMailer\Exception;
 
 function email_admin($mail) {
     try {
-        $subject = 'Unbelievable Truth - confirm your email';
+        $subject = 'Unbelievable Truth - shop error';
         require_once(base_path("../secure/mailauth/ut.php"));
 
         // mail auth
@@ -27,6 +27,7 @@ function email_admin($mail) {
         $mail->Host = $mail_auth['host'];
         $mail->SMTPAuth = true;
         $mail->SMTPKeepAlive = false; //SMTP connection will not close after each email sent, reduces SMTP overhead
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; 
         $mail->Port = $mail_auth['port'];
         $mail->Username = $mail_auth['username'];
         $mail->Password = $mail_auth['password'];
