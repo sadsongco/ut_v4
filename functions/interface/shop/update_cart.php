@@ -16,12 +16,15 @@ if (isset($_POST['item_id']) && $_POST['item_id'] == ARTPRINT_ID) {
 
 if (isset($_POST['remove']) || (isset($_POST['update']) && $_POST['quantity'] == 0)) {
     $cart_item_id = isset($_POST['item_id']) ? (int)$_POST['item_id'] : false;
+    $cart_option_id = isset($_POST['option_id']) ? (int)$_POST['option_id'] : false;
     $cart_bundle_id = isset($_POST['bundle_id']) ? (int)$_POST['bundle_id'] : false;
-    
     if ($cart_item_id) {
         foreach($_SESSION['items'] AS $key=>$cart_item) {
             $item_id = (int)$cart_item['item_id'];
-            if ($cart_item['item_id'] == $cart_item_id) {
+            if ($cart_item['item_id'] == $cart_item_id && !$cart_option_id) {
+                unset($_SESSION['items'][$key]);
+            }
+            if ($cart_item['item_id'] == $cart_item_id && $cart_option_id && $cart_item['option_id'] == $cart_option_id) {
                 unset($_SESSION['items'][$key]);
             }
         }
@@ -43,12 +46,16 @@ if (isset($_POST['remove']) || (isset($_POST['update']) && $_POST['quantity'] ==
 
 if (isset($_POST['update'])) {
     $cart_item_id = isset($_POST['item_id']) ? (int)$_POST['item_id'] : false;
+    $cart_option_id = isset($_POST['option_id']) ? (int)$_POST['option_id'] : false;
     $cart_bundle_id = isset($_POST['bundle_id']) ? (int)$_POST['bundle_id'] : false;
     
     if ($cart_item_id) {
         foreach($_SESSION['items'] AS $key=>$cart_item) {
             $item_id = (int)$cart_item['item_id'];
-            if ($item_id == $cart_item_id) {
+            if ($item_id == $cart_item_id && !$cart_option_id) {
+                $_SESSION['items'][$key]['quantity'] = (int)$_POST['quantity'];
+            }
+            if ($cart_item['item_id'] == $cart_item_id && $cart_option_id && $cart_item['option_id'] == $cart_option_id) {
                 $_SESSION['items'][$key]['quantity'] = (int)$_POST['quantity'];
             }
         }

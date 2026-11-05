@@ -6,7 +6,8 @@ use Database\Database;
 $db = new Database('orders');
 $query = "SELECT
     Items.price,
-    Item_options.option_price
+    Item_options.option_price,
+    Item_options.option_description
 FROM Items
 JOIN Item_options
     ON Item_options.item_option_id = ?
@@ -16,4 +17,7 @@ $item_prices = $db->query($query, [$_GET['option_id'], $_GET['item_id']])->fetch
 
 $item_price = $item_prices['option_price'] ?? $item_prices['price'];
 
-echo "&pound;" . number_format($item_price, 2);
+echo $m->render("shop/item_price", [
+    "price"=>number_format($item_price, 2),
+    "option_description"=>$item_prices['option_description']
+    ]);

@@ -1,9 +1,14 @@
         <div class="item-interact">
-            {{^is_bundle}}
-            <form hx-post='/functions/interface/shop/add_to_cart.php' hx-swap='innerHTML'>
-            {{/is_bundle}}
-                <input type="hidden" name="item_id{{#is_bundle}}[]{{/is_bundle}}" value='{{item_id}}'>
+                {{^item_view}}
+                    {{^is_bundle}}
+                    <form hx-post='/functions/interface/shop/add_to_cart.php' hx-swap='innerHTML'>
+                    {{/is_bundle}}
+                    <input type="hidden" name="item_id{{#is_bundle}}[]{{/is_bundle}}" value='{{item_id}}'>
+                {{/item_view}}
+
                 {{#option}}
+
+                    {{^item_view}}
                     <select name='option_id{{#is_bundle}}[]{{/is_bundle}}' data-item_id='{{item_id}}' onchange='updateItemPrice(event)'>
                         {{#options}}
                             {{#option_price}}
@@ -20,15 +25,53 @@
                     {{^option_price}}
                         <div id="item{{item_id}}-price">&pound;{{price}}</div>
                     {{/option_price}}
-                
+                    {{/item_view}}
+
+
+                    {{#item_view}}
+                        {{#options}}
+                            <section class="accordion" id="item{{item_id}}-{{item_option_id}}">
+                                <header data-targetid="item{{item_id}}-{{item_option_id}}">
+                                    <h2 data-targetid="item{{item_id}}-{{item_option_id}}">{{option_name}}</h2>
+                                    <i class="fa-solid fa-plus" data-targetid="item{{item_id}}-{{item_option_id}}" aria-hidden="true"></i>
+                                </header>
+                                <div class="accordion-content" id="item{{item_id}}-{{item_option_id}}-content">
+                                    <p>Here's some stuff about each item option. {{option_price}}. {{option_description}}</p>
+                                    <button
+                                        class="submit"
+                                        hx-post='/functions/interface/shop/add_to_cart.php'
+                                        hx-target='#interact-fb-item{{item_id}}-{{item_option_id}}'
+                                        hx-vals='{"item_id":"{{item_id}}", "option_id":"{{item_option_id}}"}'
+                                        hx-on:click='resizeAccordionContent(event)'
+                                    >Add Item To Cart</button>
+                                    <div id="interact-fb-item{{item_id}}-{{item_option_id}}"></div>
+                                </div>
+                            </section>
+                        {{/options}}
+                    {{/item_view}}
+
+
                 {{/option}}
+
                 {{^option}}
                     <input type="hidden" name="option_id{{#is_bundle}}[]{{/is_bundle}}" value="">
                     <div id="item{{item_id}}-price">&pound;{{price}}</div>
+                    {{#item_view}}
+                    <button
+                        class="submit"
+                        hx-post='/functions/interface/shop/add_to_cart.php'
+                        hx-target='#interact-fb-item{{item_id}}-{{item_option_id}}'
+                        hx-vals='{"item_id":"{{item_id}}"}'
+                        hx-on:click='resizeAccordionContent(event);disableButton(event)'
+                    >Add Item To Cart</button>
+                    <div id="interact-fb-item{{item_id}}-{{item_option_id}}"></div>
+                    {{/item_view}}
                 {{/option}}
                 {{^is_bundle}}
-                    <input type="submit" value="Add Item To Cart">
-            </form>
+                    {{^item_view}}
+                        <input type="submit" value="Add Item To Cart">
+                        </form>
+                    {{/item_view}}
                 {{/is_bundle}}
         </div>
         <section id="cartResult{{item_id}}"></section>

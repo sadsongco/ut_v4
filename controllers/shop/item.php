@@ -32,6 +32,8 @@ $categories = getCategories($db);
 
 echo $this->renderer->render('shop/item', [
     "item"=>$item,
+    "item_view"=>true,
     "categories"=>$categories,
-    "stylesheets"=>["shop"]
+    "stylesheets"=>["shop", "accordion"],
+    "scripts"=>["accordion"]
 ]);

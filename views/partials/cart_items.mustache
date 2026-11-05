@@ -8,6 +8,7 @@
             <div class='item-interact'>
                 <form hx-post='/functions/interface/shop/update_cart.php'>
                     <input type="hidden" name="item_id" value="{{item_id}}">
+                    {{#option_id}}<input type="hidden" name="option_id" value="{{option_id}}">{{/option_id}}
                     {{^checkout}}
                     <input type="number" name="quantity" value="{{quantity}}" min="0" max="{{stock}}">
                     <input type="submit" name="update" value="Update Quantity">
