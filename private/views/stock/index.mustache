@@ -74,17 +74,40 @@
                 </div>
             </form>
             {{/options}}
+            <h2>Add New Option</h2>
             <form hx-post="/private/functions/interface/stock/update_item.php">
                 <div class="update-stock-item">
                     <input type="hidden" name="item_id" value="{{item_id}}">
                     <label for="option_name">Option Name</label>
                     <input type="text" name="option_name" id="option_name">
+                    <label for="option_name">Option Image</label>
+                    <input type="text" name="option_image" id="option_image">
+                    <label for="option_name">Option Description</label>
+                    <textarea name="option_description" id="option_description"></textarea>
                     <label for="option_price">Option Price</label>
                     <input type="number" step="0.01" name="option_price" id="option_price">
                     <label for="option_weight">Option Weight (g)</label>
                     <input type="number" step="1" name="option_weight" id="option_weight">
+                    <label for="option_weight">Option Length (mm)</label>
+                    <input type="number" step="1" name="length_mm" id="length_mm">
+                    <label for="option_weight">Option Width (mm)</label>
+                    <input type="number" step="1" name="width_mm" id="width_mm">
+                    <label for="option_weight">Option Depth (mm)</label>
+                    <input type="number" step="1" name="depth_mm" id="depth_mm">
                     <label for="option_stock">Option Stock</label>
                     <input type="number" step="1" name="option_stock" id="option_stock">
+                    <label for="option_e_delivery">E-delivery</label>
+                    <input type="checkbox" name="e_delivery" id="option_e_delivery" {{e_delivery}}>
+                    <label for="download">Download URL</label>
+                    <input type="text" name="download" id="download">
+                    <label for="packaging_classification">Packaging Classification</label>
+                    <select name="packaging_classification" id="packaging_classification">
+                    {{#packaging_options}}
+                        <option value="{{name}}"{{selected}}>{{name}}</option>
+                    {{/packaging_options}}
+                    </select>
+                    <label for="option_name">Option SKU</label>
+                    <input type="text" name="option_sku" id="option_sku">
                     <input type="submit" value="Add New Option" name="add_new_option">
                 </div>
             </form>

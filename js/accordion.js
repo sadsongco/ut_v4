@@ -69,11 +69,6 @@ const resizeAccordionContent = async (e) => {
   });
 };
 
-const disableButton = (e) => {
-  e.target.disabled = true;
-  e.target.classList.add('disabled');
-};
-
 /**
  * Closes all open accordion items except the one with the given id.
  * @param {string} id - The id of the accordion item to be left open.

@@ -42,7 +42,7 @@
                                         hx-post='/functions/interface/shop/add_to_cart.php'
                                         hx-target='#interact-fb-item{{item_id}}-{{item_option_id}}'
                                         hx-vals='{"item_id":"{{item_id}}", "option_id":"{{item_option_id}}"}'
-                                        hx-on:click='resizeAccordionContent(event)'
+                                        hx-on:click='resizeAccordionContent(event); disableButton(event)'
                                     >Add Item To Cart</button>
                                     <div id="interact-fb-item{{item_id}}-{{item_option_id}}"></div>
                                 </div>
