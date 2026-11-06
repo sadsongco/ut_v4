@@ -228,6 +228,10 @@ a.view-cart-items .view-cart-badge {
   padding: var(--std-padding-medium);
 }
 
+.shop-item .item-interact {
+  max-width: 30em;
+}
+
 .shop-item h2 {
   font-family: var(--heading-font);
   font-weight: 900;

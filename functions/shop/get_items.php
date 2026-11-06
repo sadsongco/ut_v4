@@ -5,7 +5,7 @@ function getItems($db, $category=null)
     $where = "";
     $params = [];
     if ($category) {
-        $where = "WHERE Items.category = ?";
+        $where = "AND Items.category = ?";
         $params = [$category];
     }
     $query = "SELECT * FROM (
@@ -13,6 +13,7 @@ function getItems($db, $category=null)
             Items.item_id, Items.name, Items.price, Items.image, Items.featured,
             IFNULL(Items.stock, 0) + (SELECT IFNULL(SUM(Item_options.option_stock), 0) FROM Item_options WHERE Item_options.item_id = Items.item_id) AS stock
             FROM Items
+            WHERE active = 1
             $where
             GROUP BY Items.item_id
             ORDER BY featured DESC

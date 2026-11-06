@@ -14,6 +14,7 @@ function getFeatured($db, $category=null)
             Items.stock + (SELECT IFNULL(SUM(Item_options.option_stock), 0) FROM Item_options WHERE Item_options.item_id = Items.item_id) AS stock
             FROM Items
             WHERE featured = 1
+            AND active = 1
             $where
             GROUP BY Items.item_id
             ORDER BY featured DESC

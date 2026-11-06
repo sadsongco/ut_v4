@@ -36,7 +36,14 @@
                                     <i class="fa-solid fa-plus" data-targetid="item{{item_id}}-{{item_option_id}}" aria-hidden="true"></i>
                                 </header>
                                 <div class="accordion-content" id="item{{item_id}}-{{item_option_id}}-content">
-                                    <p>Here's some stuff about each item option. {{option_price}}. {{option_description}}</p>
+                                    <div class="item-price">&pound;{{option_price}}</div>
+                                    {{#option_image}}
+                                        <div class="item-img item-thumb">
+                                            <img src='{{image_path}}' width='200'>
+                                        </div>
+                                    {{/option_image}}
+
+                                    <p>{{{option_description}}}</p>
                                     <button
                                         class="submit"
                                         hx-post='/functions/interface/shop/add_to_cart.php'

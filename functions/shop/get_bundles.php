@@ -25,15 +25,21 @@ function getBundles($db, $category=null)
         $params = [$bundle['bundle_id']];
         $query = "SELECT
         Bundle_items.item_id,
-        Items.item_id, Items.name, Items.price, Items.image, Items.featured,
-        Items.stock + (SELECT IFNULL(SUM(Item_options.option_stock), 0) FROM Item_options WHERE Item_options.item_id = Items.item_id) AS stock
+        Items.item_id, Items.name, Items.price, Items.image, Items.featured, Items.active,
+        Items.stock + (SELECT
+            IFNULL(SUM(Item_options.option_stock), 0)
+            FROM Item_options
+            WHERE Item_options.item_id = Items.item_id
+        ) AS stock
         FROM Bundle_items
-        JOIN Items ON Bundle_items.item_id = Items.item_id
+        JOIN Items ON Bundle_items.item_id = Items.item_id AND Items.active=1
         WHERE Bundle_items.bundle_id = ?
         ";
         $bundle['items'] = $db->query($query, $params)->fetchAll();
+        if (sizeof($bundle['items']) == 0) continue;
         $bundle['raw_price'] = 0;
         foreach ($bundle['items'] as &$item) {
+            if ($item['active'] == 0) continue;
             if ($item['stock'] < $bundle['stock']) $bundle['stock'] = $item['stock'];
             $bundle['raw_price'] += $item['price'];
             $item_options = $db->query("SELECT * FROM Item_options WHERE item_id = ? AND option_stock > 0", [$item['item_id']])->fetchAll();
@@ -45,6 +51,7 @@ function getBundles($db, $category=null)
         $bundle['saving'] = number_format($bundle['raw_price'] - $bundle['price'], 2);
         $bundle['disp_price'] = number_format($bundle['price'], 2);
         $bundle['is_bundle'] = true;
+        p_2($bundle);
         if ($bundle['stock'] > 0) {
             $return_bundles[] = $bundle;
         }

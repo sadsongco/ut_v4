@@ -26,6 +26,13 @@ if (isset($item['release_date']) && $item['release_date'] > date("Y-m-d")) {
 
 $item_options = $db->query("SELECT * FROM Item_options WHERE item_id = ? AND Item_options.option_stock > 0", [$paths[2]])->fetchAll();
 
+foreach($item_options as &$item_option) {
+    if (isset($item_option['option_price'])) $item_option['option_price'] = number_format($item_option['option_price'], 2);
+    if ($item_option['option_image'] == "") unset($item_option['option_image']);
+    else $item_option['image_path'] = "/serve/" . SHOP_ASSET_PATH . "images/" . str_replace(".", "/", $item_option['option_image']);
+}
+
+
 $item['option'] = sizeof($item_options) > 0 ? ['options'=>$item_options] : false;
 
 $categories = getCategories($db);
