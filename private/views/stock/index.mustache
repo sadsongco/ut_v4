@@ -232,13 +232,17 @@
     </header>
     <div class="accordion-content" id="createBundle-content">
         <form hx-post="/private/functions/interface/stock/create_bundle.php">
-            <div class="update-stock-item">
-                <label for="bundle-item-1">bundle item 1</label>
-                <select name="bundle-item[]" id="bundle-item-1">
-                    {{#items}}
-                        <option value="{{item_id}}">{{name}}</option>
-                    {{/items}}
-                </select>
+            <div>
+                <div id="bundle-item-container-1"  class="update-stock-item">
+                    <label for="bundle-item-1">bundle item 1</label>
+                    <select name="bundle-item[]" id="bundle-item-1" data-bundle_page_id="1" onchange="bundleItemOptions(event)">
+                        {{#items}}
+                            <option value="{{item_id}}">{{name}}</option>
+                        {{/items}}
+                    </select>
+                    <div class="spacer"></div>
+                    <div class="bundle-item-options-1" id="bundle-item-options-1"></div>
+                </div>
                 <button onclick="addBundleItem(event)">Add Bundle Item</button><div></div>
                 <label for="bundle_price">Price</label>
                 <input type="number" name="price" id="bundle_price" step="0.50" required>
@@ -248,24 +252,5 @@
     </div>
 </section>
 
-<script>
-    const addBundleItem = (e) => {
-        e.preventDefault();
-        const container = document.getElementById('createBundle-content');
-        const els = document.querySelectorAll('[id^=bundle-item]');
-        const lastSelect = els[els.length - 1];
-        const lastLabel = document.querySelector(`[for=${lastSelect.id}]`)
-        const newSelect = lastSelect.cloneNode(true);
-        const newLabel = lastLabel.cloneNode(true);
-        const splitName = lastSelect.id.split("-");
-        splitName[splitName.length - 1] ++;
-        const newId = splitName.join("-");
-        newSelect.id = newId;
-        newLabel.setAttribute('for', newId);
-        newLabel.innerText = newId.replaceAll("-", " ");
-        lastSelect.insertAdjacentElement("afterend", newLabel);
-        newLabel.insertAdjacentElement("afterend", newSelect);
-        container.style.maxHeight = `${container.scrollHeight}px`;
-    }
-</script>
+<script src="/private/js/bundleManagement.js"></script>
 {{>html_footer}}

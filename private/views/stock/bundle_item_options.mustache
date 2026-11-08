@@ -1,0 +1,10 @@
+<div id="bundle-item-options-{{bundle_page_id}}" class="bundle-item-options">
+    {{#options}}
+    <select id="bundle-item-options-{{bundle_page_id}}" name="bundle-item-option[]" data-item-id="{{item_id}}">
+    {{#item_options}}
+        <option value="*" selected>Any</option>
+        <option value="{{item_option_id}}">{{option_name}}</option>
+    {{/item_options}}
+    </select>
+    {{/options}}
+</div>
