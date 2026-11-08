@@ -16,10 +16,15 @@ function getPackageSpecs($cart_contents)
         addPackagingClassification($item, $packaging_classifications);
         $all_e_delivery = false;
         $items_weight += getItemWeight($item);
-        if ($item['length_mm'] > $length) $length = $item['length_mm'];
-        if ($item['width_mm'] > $width) $width = $item['width_mm'];
-        $depth += $item['depth_mm'] * $item['quantity'];
+        $item_length = getItemLength($item);
+        $item_width = getItemWidth($item);
+        // if ($item['length_mm'] > $length) $length = $item['length_mm'];
+        if ($item_length > $length) $length = $item_length;
+        // if ($item['width_mm'] > $width) $width = $item['width_mm'];
+        if ($item_width > $width) $width = $item_width;
+        $depth += getItemDepth($item) * $item['quantity'];
     }
+
     if (isset($cart_contents['bundles']) && sizeof($cart_contents['bundles']) > 0) {
         foreach ($cart_contents['bundles'] as $bundle) {
             foreach ($bundle['items'] as $item) {
@@ -39,6 +44,7 @@ function getPackageSpecs($cart_contents)
         $arr[] = $key . "_" . $value;
     }
     $packaging_classification = implode("-", $arr);
+
     if (!isset(ITEM_PACKAGES[$packaging_classification])) {
         $packaging_classification = "DEFAULT";
     }
@@ -63,6 +69,9 @@ function getPackageSpecs($cart_contents)
 
 function addPackagingClassification ($item, &$packaging_classifications)
 {
+    if (isset($item['option_id']) && $item['option_id']) {
+        $item['packaging_classification'] = $item['option_packaging_classification'];
+    }
     if (!isset($packaging_classifications[$item['packaging_classification']])) {
         $packaging_classifications[$item['packaging_classification']] = $item['quantity'];
     } else {
@@ -75,4 +84,25 @@ function getItemWeight ($item) {
         return $item['option_weight'] * $item['quantity']; //stored in grams. annoyingly
     }
     return $item['weight'] * $item['quantity'] * 1000;
+}
+
+function getItemLength ($item) {
+    if (isset($item['option_id']) && $item['option_id']) {
+        return $item['option_length_mm']; //stored in grams. annoyingly
+    }
+    return $item['length_mm'];
+}
+
+function getItemWidth ($item) {
+    if (isset($item['option_id']) && $item['option_id']) {
+        return $item['option_width_mm']; //stored in grams. annoyingly
+    }
+    return $item['width_mm'];
+}
+
+function getItemDepth ($item) {
+    if (isset($item['option_id']) && $item['option_id']) {
+        return $item['option_depth_mm']; //stored in grams. annoyingly
+    }
+    return $item['depth_mm'];
 }

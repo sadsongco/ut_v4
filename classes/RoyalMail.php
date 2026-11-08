@@ -125,31 +125,18 @@ class RoyalMail {
     private function getItems()
     {
         $query = "SELECT
-            Items.name,
-            Items.price,
-            Items.weight,
-            Items.customs_description,
-            Items.customs_code,
-            Items.sku,
-            Item_options.option_name,
-            New_Order_items.option_id,
-            New_Order_items.quantity
-            FROM New_Order_items
-            JOIN Items ON New_Order_items.item_id = Items.item_id
-            LEFT JOIN Item_options ON New_Order_items.option_id = Item_options.item_option_id
-            WHERE New_Order_items.order_id = ?
-            AND order_bundle_id IS NULL
-            ";
+            item_id,
+            option_id,
+            quantity
+        FROM New_Order_items
+        WHERE order_id = ?
+        AND order_bundle_id IS NULL;";
         $params = [$this->order_id];
-        $items = $this->db->query($query, $params)->fetchAll();
-        foreach ($items as &$item) {
-            $item['weight'] *= 1000; // item weights in annoying kg
-            if ($item['option_id']) {
-                $query = "SELECT option_weight FROM Item_options WHERE item_option_id = ?";
-                $params = [$item['option_id']];
-                $item['weight'] = $this->db->query($query, $params)->fetch()['option_weight'];
-            }
+        $item_ids = $this->db->query($query, $params)->fetchAll();
+        foreach ($item_ids as $item) {
+            $items[] = getItemData($item, "Items.*", $this->db);
         }
+
         $query = "SELECT
             Items.name,
             Items.price,

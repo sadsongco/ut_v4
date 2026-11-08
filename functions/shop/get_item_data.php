@@ -10,6 +10,14 @@ function getItemData($item, $item_details, $db)
                 Item_options.option_name,
                 Item_options.option_price,
                 Item_options.option_weight,
+                Item_options.option_sku,
+                Item_options.packaging_classification as option_packaging_classification,
+                Item_options.e_delivery as option_e_delivery,
+                Item_options.customs_description as option_customs_description,
+                Item_options.customs_code as option_customs_code,
+                Item_options.length_mm as option_length_mm,
+                Item_options.width_mm as option_width_mm,
+                Item_options.depth_mm as option_depth_mm,
                 Items.release_date,
                 Items.e_delivery,
                 Items.packaging_classification
@@ -24,6 +32,10 @@ function getItemData($item, $item_details, $db)
         $cart_item = $db->query($query, $params)->fetch();
         if ($item['item_id'] == ARTPRINT_ID) $cart_item['ship_with_order'] = true;
         if (isset($cart_item['option_price']) && $cart_item['option_price']) $cart_item['price'] = number_format($cart_item['option_price'], 2);
+        if (isset($cart_item['option_weight']) && $cart_item['option_weight']) $cart_item['weight'] = number_format($cart_item['option_weight'], 2);
+        if (isset($cart_item['option_sku']) && $cart_item['option_sku']) $cart_item['sku'] = $cart_item['option_sku'];
+        if (isset($cart_item['option_customs_description']) && $cart_item['option_customs_description']) $cart_item['customs_description'] = $cart_item['option_customs_description'];
+        if (isset($cart_item['option_customs_code']) && $cart_item['option_customs_code']) $cart_item['customs_code'] = $cart_item['option_customs_code'];
         if ($cart_item['image'] == "") unset($cart_item['image']);
         else $cart_item['image_path'] = "/serve/" . SHOP_ASSET_PATH . "images/" . str_replace(".", "/", $cart_item['image']);
 
