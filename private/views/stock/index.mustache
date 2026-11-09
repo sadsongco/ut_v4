@@ -231,7 +231,7 @@
         <i class="fa-solid fa-plus"></i>
     </header>
     <div class="accordion-content" id="createBundle-content">
-        <form hx-post="/private/functions/interface/stock/create_bundle.php">
+        <form hx-post="/private/functions/interface/stock/create_bundle.php" target="#create-bundle-result" hx-swap="innerHTML">
             <div>
                 <div id="bundle-item-container-1"  class="update-stock-item">
                     <label for="bundle-item-1">bundle item 1</label>
@@ -246,10 +246,11 @@
                 <button onclick="addBundleItem(event)">Add Bundle Item</button><div></div>
                 <label for="bundle_price">Price</label>
                 <input type="number" name="price" id="bundle_price" step="0.50" required>
-                <input type="submit" value="add Bundle">
+                <input type="submit" value="add Bundle" onclick="disableButton()">
             </div>
         </form>
     </div>
+    <div id="create-bundle-result"></div>
 </section>
 
 <script src="/private/js/bundleManagement.js"></script>

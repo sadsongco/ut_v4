@@ -54,19 +54,10 @@
         <section class="show bundles">
             <h2>Bundles</h2>
             {{#bundles}}
-                <section class="bundle">
-                    <form hx-post='/functions/interface/shop/add_to_cart.php' hx-target='#bundleResult{{bundle_id}}' hx-swap='innerHTML'>
-                    {{#items}}
-                        <div class="bundle-item">
-                            <p>{{name}}</p>
-                            {{#image}}
-                                <img src="{{image_path}}" alt="image" height="50px">
-                            {{/image}}
-                            {{>item_interact}}
-                        </div>
-                    {{/items}}
-                    {{>bundle_interact}}
-                    </form>
+                <section hx-get="/shop/bundle/{{bundle_id}}" hx-indicator="#spinner" hx-trigger="load" hx-swap="outerHTML">
+                    <div class="spinner htmx-indicator" id="spinner">
+                        <img src="/serve/images/graphics/loading/gif/inline" alt="loading spinner" />
+                    </div>
                 </section>
             {{/bundles}}
         </section>

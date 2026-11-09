@@ -35,6 +35,10 @@ class ShopRouter extends Router
         'category' => [
             'name' => 'Category',
             'controller' => 'shop/category'
+        ],
+        'bundle' => [
+            'name' => 'Bundle',
+            'controller' => 'shop/bundle'
         ]
     ];
     function __construct($renderer)

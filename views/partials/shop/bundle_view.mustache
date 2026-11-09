@@ -1,0 +1,14 @@
+                <section class="bundle">
+                    <form hx-post='/functions/interface/shop/add_to_cart.php' hx-target='#bundleResult{{bundle_id}}' hx-swap='innerHTML'>
+                    {{#items}}
+                        <div class="bundle-item">
+                            <p>{{name}}</p>
+                            {{#image}}
+                                <img src="{{image_path}}" alt="image" height="50px">
+                            {{/image}}
+                            {{>item_interact}}
+                        </div>
+                    {{/items}}
+                    {{>bundle_interact}}
+                    </form>
+                </section>

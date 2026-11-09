@@ -51,11 +51,14 @@ section.items {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  grid-template-columns: repeat(auto-fit, 25em);
-  grid-template-rows: repeat(auto-fit, 1fr);
+  /* grid-template-columns: repeat(auto-fit, 25em);
+  grid-template-rows: repeat(auto-fit, 1fr); */
+  border-bottom: 1px solid #999;
 }
-section.items {
-  padding-top: var(--std-padding-medium);
+
+section.items:first-of-type {
+  margin-top: var(--std-padding-medium);
+  border-top: 1px solid #999;
 }
 
 section.bundles h2,
