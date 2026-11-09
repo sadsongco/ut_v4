@@ -124,6 +124,7 @@ class RoyalMail {
 
     private function getItems()
     {
+        $items = [];
         $query = "SELECT
             item_id,
             option_id,

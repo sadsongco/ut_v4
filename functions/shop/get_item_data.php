@@ -63,8 +63,8 @@ function classifyItem(&$item, $order_db_id, $db, &$shipping_items, &$download_it
             $download_token = createUniqueToken($res['download_token_id']);
         }
         else {
-            $query = "INSERT INTO Download_tokens (order_id, item_id) VALUES (?, ?)";
-            $db->query($query, [$order_db_id, $item['item_id']]);
+            $query = "INSERT INTO Download_tokens (order_id, item_id, item_option_id) VALUES (?, ?, ?)";
+            $db->query($query, [$order_db_id, $item['item_id'], $item['option_id']]);
             $download_token = createUniqueToken($db->lastInsertId());
         }
         $item["download_token"] = $download_token;
@@ -82,8 +82,9 @@ function updateItemData(&$item, $db)
     $item['release_date'] = $res['release_date'];
     $item['disp_release_date'] = $res['disp_release_date'];
     if ($item['option_id']) {
-        $query = "SELECT option_name FROM Item_options WHERE item_option_id = ?";
+        $query = "SELECT option_name, download FROM Item_options WHERE item_option_id = ?";
         $res = $db->query($query, [$item['option_id']])->fetch();
         $item['option_name'] = $res['option_name'];
+        if ($res['download']) $item['download'] = $res['download'];
     }
 }

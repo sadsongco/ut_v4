@@ -26,7 +26,7 @@ function sendCustomerEmail($order, $template, $db, $m) {
         require(base_path("../secure/mailauth/ut.php"));
         $subject = "Unbelievable Truth - ";
         $subject .= $subjects[$template];
-        $email = $m->render("emails/customer/$template", ["order"=>$order, "host"=>getHost()]);
+        $email = $m->render("emails/customer/$template", ["order"=>$order, "host"=>getHost(), "download_limit"=>DOWNLOAD_LIMIT, "filename"=>$filename]);
         // mail auth
         $from_name = "Unbelievable Truth shop";
         

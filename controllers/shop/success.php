@@ -139,7 +139,9 @@ echo $this->renderer->render('shop/success', [
     "order"=>$order,
     "order_db_id"=>$order_db_id,
     "customer_token"=>$customer_token,
-    "stylesheets"=>["shop"]]
+    "stylesheets"=>["shop"],
+    "download_limit"=>DOWNLOAD_LIMIT
+    ]
 );
 
 session_destroy();

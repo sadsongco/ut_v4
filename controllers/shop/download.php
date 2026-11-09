@@ -14,6 +14,7 @@ $download_token = isset($paths[2]) ? $paths[2] : false;
 if (!$download_token) exit("No Token");
 
 $id = decryptUniqueToken($download_token);
+echo $id;
 if (!$id || !is_numeric($id)) exit("Invalid Token");
 
 if ($id == 7787782550) {
@@ -30,17 +31,47 @@ if ($id == 7787782550) {
     exit();
 }
 
-$query = "SELECT download
-    FROM Download_tokens
-    JOIN Items ON Items.item_id = Download_tokens.item_id
-    WHERE download_token_id = ?";
-$item = $db->query($query, [$id])->fetch();
-$filename = isset($item['download']) ? $item['download'] : false;
+try {
+    $query = "SELECT
+        Download_tokens.downloaded,
+        Items.download AS download,
+        Item_options.download AS option_download
+    FROM
+        Download_tokens
+        JOIN Items ON Items.item_id = Download_tokens.item_id
+        JOIN Item_options ON Item_options.item_option_id = Download_tokens.item_option_id
+    WHERE
+        download_token_id = ?
+    AND
+        downloaded < " . DOWNLOAD_LIMIT;
+    $params = [(int)$id];
+    $item = $db->query($query, $params)->fetch();
+} catch (PDOException $e) {
+    error_log($e);
+    echo "Database error with your download. Please contact info@unbelievabletruth.co.uk";
+}
+
+$filename = false;
+if (isset($item['download'])) $filename = $item['download'];
+if (isset($item['option_download'])) $filename = $item['option_download'];
 if (!$filename) exit("Invalid Token");
 
 $file_path = base_path(DOWNLOAD_PATH . $filename);
 
 triggerDownload($filename, $file_path);
 
-$query = "DELETE FROM Download_tokens WHERE download_token_id = ?";
-$db->query($query, [$id]);
+$item['downloaded']++;
+if ($item['downloaded'] >= DOWNLOAD_LIMIT) {
+    $query = "DELETE FROM Download_tokens WHERE download_token_id = ?";
+    $params = [(int)$id];
+} else {
+    $query = "UPDATE Download_tokens SET downloaded = ? WHERE download_token_id = ?";
+    $params = [$item['downloaded'], (int)$id];
+}
+
+try {
+    $db->query($query, $params);
+} catch (PDOException $e) {
+    error_log($e);
+    echo "Database error.";
+}
