@@ -87,9 +87,11 @@ if ($_SESSION['shipping_method']['shipping_method_id'] == 7) {
     else (exit("PROBLEM"));
 } else {
     if (!isset($_SESSION['items'])) $_SESSION['items'] = [];
+
     foreach ($_SESSION['items'] AS &$item) {
         updateItemData($item, $db);
         classifyItem($item, $order_db_id, $db, $shipping_items, $download_items, $preorder_items);
+
     }
     
     if (!isset($_SESSION['bundles'])) $_SESSION['bundles'] = [];
@@ -106,6 +108,7 @@ if (!empty($shipping_items) && !empty($preorder_items)) $preorder_items['held'] 
 
 use RoyalMail\RoyalMail;
 if ($shipping_all) {
+    echo "RM";
     $rm = new RoyalMail($order_db_id, $db);
     $rm->createRMOrder();
     $rm->submitRMOrder();

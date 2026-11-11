@@ -7,7 +7,7 @@ function getPackageSpecs($cart_contents)
     $items_weight = 0;
     $packaging_classifications = [];
     foreach ($cart_contents['items'] as $item) {
-        if ($item['e_delivery'] == 1) continue;
+        if ($item['e_delivery'] == 1 || ($item['option_id'] && $item['option_e_delivery'] == 1)) continue;
         if (isset($item['ship_with_order']) && $item['ship_with_order'] == 1) {
             return  [
                 "ship_with_order" => true

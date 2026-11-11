@@ -82,9 +82,10 @@ function updateItemData(&$item, $db)
     $item['release_date'] = $res['release_date'];
     $item['disp_release_date'] = $res['disp_release_date'];
     if ($item['option_id']) {
-        $query = "SELECT option_name, download FROM Item_options WHERE item_option_id = ?";
+        $query = "SELECT option_name, download, e_delivery FROM Item_options WHERE item_option_id = ?";
         $res = $db->query($query, [$item['option_id']])->fetch();
         $item['option_name'] = $res['option_name'];
         if ($res['download']) $item['download'] = $res['download'];
+        if ($res['e_delivery']) $item['e_delivery'] = $res['e_delivery'];
     }
 }

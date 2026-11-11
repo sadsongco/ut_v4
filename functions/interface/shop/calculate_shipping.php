@@ -65,6 +65,7 @@ function calculateShipping($db, $zone, $method) {
 
 
 if (isset($_POST['update'])) {
+    $tariff = false;
     $db = new Database('orders');
     $shipping_method = $db->query("SELECT * FROM Shipping_methods WHERE shipping_method_id = ?", [$_SESSION['shipping_method']['shipping_method_id']])->fetch();
     $shipping = 0;

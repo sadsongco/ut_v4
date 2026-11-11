@@ -13,10 +13,10 @@ $download_token = isset($paths[2]) ? $paths[2] : false;
 
 if (!$download_token) exit("No Token");
 
-$id = decryptUniqueToken($download_token);
-echo $id;
-if (!$id || !is_numeric($id)) exit("Invalid Token");
 
+$id = decryptUniqueToken($download_token);
+if (!$id || !is_numeric($id)) exit("Invalid Token");
+$id = (int)$id;
 if ($id == 7787782550) {
     $order_no = isset($paths[3]) ? $paths[3] : false;
     if(!$order_no) exit("No Order Number");
