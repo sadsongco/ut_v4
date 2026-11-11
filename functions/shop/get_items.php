@@ -17,12 +17,25 @@ function getItems($db, $category=null)
             $where
             GROUP BY Items.item_id
             ORDER BY featured DESC
-        )T
+        ) AS T
     WHERE T.stock > 0";
-    $items = $db->query($query, $params)->fetchAll();
+    try {
+        $items = $db->query($query, $params)->fetchAll();
+    } catch (PDOException $e) {
+        throw new Exception($e->getMessage());
+    }
     foreach ($items as &$item) {
-        $item_options = $db->query("SELECT * FROM Item_options WHERE item_id = ? AND option_stock > 0", [$item['item_id']])->fetchAll();
-        $item['option'] = sizeof($item_options) > 0 ? ['options'=>$item_options] : false;
+        try {
+            $query = "SELECT * FROM Item_options WHERE item_id = ? AND option_stock > 0";
+            $params = [$item['item_id']];
+            $item_options = $db->query($query, $params)->fetchAll();
+        } catch (PDOException $e) {
+            throw new Exception($e->getMessage());
+        }
+        if (sizeof($item_options) > 0) {
+            $item['option'] = ['options'=>$item_options];
+            $item['option']['select_option'] = true;
+        }
         if (isset($item['image']) && $item['image'])
             $item['image_path'] = "/serve/" . SHOP_ASSET_PATH . "images/" . str_replace(".", "/", $item['image']);
     }

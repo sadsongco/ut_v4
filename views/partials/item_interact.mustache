@@ -26,10 +26,10 @@
                         <input type="hidden" name='option_id{{#is_bundle}}[]{{/is_bundle}}' value="{{item_option_id}}" data-price="{{option_price}}">
                     {{/select_option}}
                     {{#option_price}}
-                        <div id="item{{item_id}}-price"><p class="currency">&pound;{{option_price}}</p></div>
+                        <div><p id="{{#is_bundle}}bundle{{bundle_id}}-{{/is_bundle}}item{{item_id}}-price" class="currency">&pound;{{option_price}}</p></div>
                     {{/option_price}}
                     {{^option_price}}
-                        <div id="item{{item_id}}-price"><p class="currency">&pound;{{price}}</p></div>
+                        <div><p id="{{#is_bundle}}bundle{{bundle_id}}-{{/is_bundle}}item{{item_id}}-price" class="currency">&pound;{{price}}</p></div>
                     {{/option_price}}
                     {{/item_view}}
 
@@ -42,7 +42,6 @@
                                     <i class="fa-solid fa-plus" data-targetid="item{{item_id}}-{{item_option_id}}" aria-hidden="true"></i>
                                 </header>
                                 <div class="accordion-content" id="item{{item_id}}-{{item_option_id}}-content">
-                                    <div class="item-price">&pound;{{option_price}}</div>
                                     {{#option_image}}
                                         <div class="item-img item-thumb">
                                             <img src='{{image_path}}' width='200'>
@@ -50,6 +49,7 @@
                                     {{/option_image}}
 
                                     <p>{{{option_description}}}</p>
+                                    <div class="item-price">&pound;{{option_price}}</div>
                                     <button
                                         class="submit"
                                         hx-post='/functions/interface/shop/add_to_cart.php'

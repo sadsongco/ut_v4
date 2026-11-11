@@ -13,10 +13,15 @@ include_once(base_path("functions/shop/get_items.php"));
 include_once(base_path("functions/shop/get_bundles.php"));
 include_once(base_path("functions/shop/get_categories.php"));
 
-$featured = getFeatured($db);
-$items = getItems($db);
-$bundles = getBundles($db);
-$categories = getCategories($db);
+try {
+    $featured = getFeatured($db);
+    $items = getItems($db);
+    $bundles = getBundles($db);
+    $categories = getCategories($db);
+} catch (Exception $e) {
+    error_log($e);
+    exit("Sorry, there has been a fundamental error.");
+}
 
 $env = false;
 if (ENV === 'dev') $env = 'dev';
@@ -30,5 +35,6 @@ echo $this->renderer->render('shop/index', [
     "session_timeout"=>isset($_GET['session_timeout']),
     "technical_error"=>isset($_GET['technical_error']),
     "env"=>$env,
-    "v"=>$v
+    "v"=>$v,
+    "debug"=>print_r($items, true)
 ]);
