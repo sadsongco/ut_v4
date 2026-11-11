@@ -7,7 +7,7 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 
-function sendCustomerEmail($order, $template, $db, $m) {
+function sendCustomerEmail(array $order, string $template, object $db, object $m) {
     $order_added_to = false;
     if (isset($order['order_added_to'])) $order_added_to = $order['order_added_to'];
     try {

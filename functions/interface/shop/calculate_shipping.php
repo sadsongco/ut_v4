@@ -12,7 +12,7 @@ class PackagingCosts {
     public const PACKAGING = 1;
 }
 
-function calculateShipping($db, $zone, $method) {
+function calculateShipping(object $db, string $zone, array $method) : array|bool {
     try {
         $query = "SELECT package_id, name
         FROM Packages
@@ -54,10 +54,8 @@ function calculateShipping($db, $zone, $method) {
             $package_specs['package_id'],
             $package_specs['name']
         ];
-    } catch (Exception $e) {
+    } catch (PDOException $e) {
         error_log($e);
-        error_log($query);
-        error_log(print_r($params, true));
         throw new Exception($e);
     }
     return 0;
@@ -85,7 +83,7 @@ if (isset($_POST['update'])) {
 }
 
 
-function getTariffCosts($country_code, $db) {
+function getTariffCosts(string $country_code, object $db) {
     $tariff = false;
     $query = "SELECT * FROM Tariffs WHERE country_id = ?";
     $params = [$country_code];
@@ -137,7 +135,7 @@ function calculateNoItems() {
     return $no_items;
 }
 
-function calculateNoHSCodes($db) {
+function calculateNoHSCodes(object $db) {
     $hs_codes = [];
     if (isset($_SESSION['items'])) {
         $items = getCartItems($_SESSION['items'], $db);
@@ -161,7 +159,7 @@ function calculateNoHSCodes($db) {
     
 }
 
-function convertCurrency($amt, $currency, $db) {
+function convertCurrency(float $amt, string $currency, object $db) {
     $query = "SELECT conversion_json FROM Currency_conversion WHERE next_update > " . time() . " ORDER BY next_update DESC LIMIT 1";
     $result = $db->query($query)->fetch();
     if (!$result) {
@@ -174,7 +172,7 @@ function convertCurrency($amt, $currency, $db) {
     return $amt;
 }
 
-function calculateTariffItemCost($customs_description, $db) {
+function calculateTariffItemCost(string $customs_description, object $db) {
     $cost_of_tariffable_items = 0;
     if (isset($_SESSION['items'])) {
         $items = getCartItems($_SESSION['items'], $db);
@@ -201,7 +199,7 @@ function calculateTariffItemCost($customs_description, $db) {
     return $cost_of_tariffable_items;
 }
 
-function getCurrentCurrencyConversion($db) {
+function getCurrentCurrencyConversion(object $db) {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_URL, "https://open.er-api.com/v6/latest/GBP");
