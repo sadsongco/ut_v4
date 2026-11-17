@@ -21,7 +21,6 @@ if(isset($paths[4]) && $paths[4] == "bundles") {
         ]));
 }
 
-
 $query = "SELECT *
     FROM Items
     WHERE item_id = ?";
@@ -50,7 +49,14 @@ foreach($item_options as &$item_option) {
     else $item_option['image_path'] = "/serve/" . SHOP_ASSET_PATH . "images/" . str_replace(".", "/", $item_option['option_image']);
 }
 
-
+$query = "SELECT DISTINCT bundle_id FROM Bundle_items WHERE item_id = ? AND item_option_id IS NULL";
+$params = [$paths[2]];
+try {
+    $assoc_bundle_ids = $db->query($query, $params)->fetchAll();
+} catch (PDOException $e) {
+    error_log($e);
+    exit("Sorry, there has been a fundamental error.");
+}
 $item['option'] = sizeof($item_options) > 0 ? ['options'=>$item_options] : false;
 
 $categories = getCategories($db);
@@ -60,5 +66,7 @@ echo $this->renderer->render('shop/item', [
     "item_view"=>true,
     "categories"=>$categories,
     "stylesheets"=>["shop", "accordion"],
-    "scripts"=>["accordion"]
+    "scripts"=>["accordion"],
+    "assoc_bundles"=>sizeof($assoc_bundle_ids) > 0,
+    "bundles"=>$assoc_bundle_ids
 ]);
