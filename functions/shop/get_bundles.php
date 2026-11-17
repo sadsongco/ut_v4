@@ -20,6 +20,8 @@ function getBundles($db, $category=null)
     $where
     WHERE `active` = 1
     GROUP BY Bundles.bundle_id";
+    p_2($query);
+    p_2($params);
     try {
         $bundles = $db->query($query, $params)->fetchAll();
     } catch (Exception $e) {
@@ -27,6 +29,7 @@ function getBundles($db, $category=null)
         exit("Error getting bundles");
     }
     $return_bundles = [];
+    p_2($bundles);
     foreach ($bundles as $bundle) {
         try {
             if (checkBundleStock($db, $bundle['bundle_id']) > 0) {
