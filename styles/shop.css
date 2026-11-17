@@ -57,6 +57,10 @@ section.items {
   border-bottom: 1px solid #999;
 }
 
+section.bundles p {
+  flex-basis: 100%;
+}
+
 section.items:first-of-type {
   margin-top: var(--std-padding-medium);
   border-top: 1px solid #999;
