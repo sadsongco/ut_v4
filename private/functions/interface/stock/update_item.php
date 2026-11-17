@@ -38,7 +38,7 @@ if (isset($_POST['add_new_option'])) {
     else $_POST['e_delivery'] = "0";
     $uploader = new FileUploader(WEB_ASSET_PATH . SHOP_ASSET_PATH, false, SHOP_MAX_IMAGE_WIDTH, SHOP_THUMBNAIL_WIDTH);
     $uploaded_files = $uploader->checkFileSizes()->uploadFiles()->getResponse();
-    $_POST['option_image'] = $uploaded_files[0]['filename'];
+    if ($uploaded_files["success"]) $_POST['option_image'] = $uploaded_files[0]['filename'];
     $query = "INSERT INTO Item_options ";
     $fields = [];
     $insert = [];

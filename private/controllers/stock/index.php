@@ -24,6 +24,7 @@ $categories = $db->query($query)->fetchAll();
 $packaging_classifications = [
     ["name"=>"CD", "selected"=>false],
     ["name"=>"LP", "selected"=>false],
+    ["name"=>"SINGLE", "selected"=>false],
     ["name"=>"SHIRT", "selected"=>false],
     ["name"=>"POSTER", "selected"=>false],
     ["name"=>"OTHER", "selected"=>false],
