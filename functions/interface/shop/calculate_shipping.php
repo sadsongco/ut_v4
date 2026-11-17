@@ -47,9 +47,6 @@ function calculateShipping(object $db, string $zone, array $method) : array|bool
             $_SESSION['package_specs']['weight'],
             $_SESSION['package_specs']['weight']
         ];
-        p_2($_SESSION);
-        p_2($query);
-        p_2($params);
         $shipping_price = $db->query($query, $params)->fetch();
         if (!$shipping_price) throw new Exception("No applicable shipping price found");
         return [

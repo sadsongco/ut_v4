@@ -37,7 +37,7 @@
                     {{#item_view}}
                         {{#options}}
                             <section class="accordion" id="item{{item_id}}-{{item_option_id}}">
-                                <header data-targetid="item{{item_id}}-{{item_option_id}}">
+                                <header data-targetid="item{{item_id}}-{{item_option_id}}" hx-get="/shop/item/{{item_id}}/{{item_option_id}}/bundles" hx-swap="none">
                                     <h2 data-targetid="item{{item_id}}-{{item_option_id}}">{{option_name}}</h2>
                                     <i class="fa-solid fa-plus" data-targetid="item{{item_id}}-{{item_option_id}}" aria-hidden="true"></i>
                                 </header>
@@ -49,15 +49,17 @@
                                     {{/option_image}}
 
                                     <p>{{{option_description}}}</p>
-                                    <div class="item-price">&pound;{{option_price}}</div>
-                                    <button
-                                        class="submit"
-                                        hx-post='/functions/interface/shop/add_to_cart.php'
-                                        hx-target='#interact-fb-item{{item_id}}-{{item_option_id}}'
-                                        hx-vals='{"item_id":"{{item_id}}", "option_id":"{{item_option_id}}"}'
-                                        hx-on:click='resizeAccordionContent(event); disableButton(event)'
-                                    >Add Item To Cart</button>
-                                    <div id="interact-fb-item{{item_id}}-{{item_option_id}}"></div>
+                                    <section class="add-item">
+                                        <div class="item-price">&pound;<span class="price">{{option_price}}</span></div>
+                                        <button
+                                            class="submit"
+                                            hx-post='/functions/interface/shop/add_to_cart.php'
+                                            hx-target='#interact-fb-item{{item_id}}-{{item_option_id}}'
+                                            hx-vals='{"item_id":"{{item_id}}", "option_id":"{{item_option_id}}"}'
+                                            hx-on:click='resizeAccordionContent(event); disableButton(event)'
+                                        >Add Item To Cart</button>
+                                    </section>
+                                    <div id="interact-fb-item{{item_id}}-{{item_option_id}}" class="item-interact-message"></div>
                                 </div>
                             </section>
                         {{/options}}

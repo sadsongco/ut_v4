@@ -9,14 +9,10 @@
         {{/cart_contents}}
     {{/empty}}
     {{#empty}}
-        <div class="shop-item">
-            <p>Your cart is currently empty</p>
-        </div>
-        <a href="/shop">
-            <button class="shop-item">
-                Back to shop
-            </button>
-        </a>
+        <section class="shop-item">
+            <p class="span2">Your cart is currently empty</p>
+            {{>shop/back_to_shop}}
+        </section>
     {{/empty}}
 </section>
 {{>html_footer}}

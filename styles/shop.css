@@ -1,4 +1,5 @@
 a {
+  all: unset;
   color: #550000;
 }
 
@@ -202,6 +203,13 @@ a.view-cart-items .view-cart-badge {
   background-color: var(--article-background);
   display: flex;
   flex-direction: column;
+}
+
+.shop-item {
+  transition:
+    max-height 1s ease-in-out,
+    padding 1s ease-in-out,
+    margin 1s ease-in-out;
 }
 
 .cart-item {
@@ -506,4 +514,20 @@ a.view-cart-items .view-cart-badge {
 
 footer {
   display: none;
+}
+
+.accordion .add-item {
+  display: grid;
+  grid-template-columns: 5em 1fr;
+  column-gap: var(--std-margin-big);
+  align-items: center;
+}
+
+.accordion .add-item button {
+  width: fit-content;
+}
+
+.accordion .item-interact-message {
+  font-size: var(--font-small);
+  min-height: 1em;
 }

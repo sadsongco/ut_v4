@@ -4,15 +4,33 @@ if(session_status() === PHP_SESSION_NONE) session_start();
 
 include_once(__DIR__ . "/../../functions/functions.php");
 include_once(base_path("functions/shop/get_categories.php"));
+include_once(base_path("functions/shop/get_bundle_data.php"));
 
 use Database\Database;
 $db = new Database('orders');
 
+if(isset($paths[4]) && $paths[4] == "bundles") {
+    $query = "SELECT DISTINCT bundle_id FROM Bundle_items WHERE item_id = ? AND item_option_id = ?";
+    $params = [$paths[2], $paths[3]];
+    $assoc_bundle_ids = $db->query($query, $params)->fetchAll();
+    exit($this->renderer->render("shop/assoc_bundles", [
+        "assoc_bundles"=>sizeof($assoc_bundle_ids) > 0,
+        "bundles"=>$assoc_bundle_ids,
+        "item_id"=>$paths[2],
+        "item_option_id"=>$paths[3]
+        ]));
+}
+
+
 $query = "SELECT *
     FROM Items
     WHERE item_id = ?";
-
-$item = $db->query($query, [$paths[2]])->fetch();
+try {
+    $item = $db->query($query, [$paths[2]])->fetch();
+} catch (Exception $e) {
+    error_log($e);
+    exit("Sorry, there has been a fundamental error.");
+}
 
 if ($item['image'] == "") unset($item['image']);
 else $item['image_path'] = "/serve/" . SHOP_ASSET_PATH . "images/" . str_replace(".", "/", $item['image']);

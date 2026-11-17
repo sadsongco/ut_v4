@@ -41,4 +41,3 @@ class RM_PRICE {
 use RM_PRICE\RM_PRICE;
 $rm_price = new RM_PRICE("GBR", 723);
 $shipping_options = $rm_price->getShippingOptions();
-p_2($shipping_options);
