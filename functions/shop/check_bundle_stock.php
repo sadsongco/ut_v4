@@ -56,7 +56,7 @@ function checkBundleStock($db, $bundle_id) {
         error_log($e);
         exit("Error checking bundle stock");
     }
-    if ((sizeof($non_option_items_stock) === 0 || $non_option_items_stock['stock'] === NULL) && min($specified_item_options_stock['stock'], $non_specified_item_options_stock['stock']) > 0) {
+    if ((sizeof($non_option_items_stock) === 0 || $non_option_items_stock['stock'] === NULL || $non_option_items_stock['stock'] === 0) && min($specified_item_options_stock['stock'], $non_specified_item_options_stock['stock']) > 0) {
         echo "No non option items returned, the smaller of specified item options stock and non specified item options stock is greater than 0";
         return min($specified_item_options_stock['stock'], $non_specified_item_options_stock['stock']);
     }
