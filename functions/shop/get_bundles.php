@@ -40,5 +40,6 @@ function getBundles($db, $category=null)
             exit("Error checking bundle stock");
         }
     }
+    p_2($return_bundles);
     return $return_bundles;
 }
