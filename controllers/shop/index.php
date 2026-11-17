@@ -24,6 +24,7 @@ try {
 }
 
 $env = false;
+if (ENV !== 'dev') exit($this->renderer->render('shop/offline', ["stylesheets"=>["shop"]]));
 if (ENV === 'dev') $env = 'dev';
 
 echo $this->renderer->render('shop/index', [

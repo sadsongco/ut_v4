@@ -108,7 +108,6 @@ if (!empty($shipping_items) && !empty($preorder_items)) $preorder_items['held'] 
 
 use RoyalMail\RoyalMail;
 if ($shipping_all) {
-    echo "RM";
     $rm = new RoyalMail($order_db_id, $db);
     $rm->createRMOrder();
     $rm->submitRMOrder();

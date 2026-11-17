@@ -269,7 +269,7 @@ class RoyalMail {
 
     private function createRMItem($item) {
         if (!isset($item['sku'])) $item['sku'] = "";
-        if ($item['option_name'] !== "") $item['name'] = $item['name'] . " - " . $item['option_name'];
+        if (isset($item['option_name']) && $item['option_name'] !== "") $item['name'] = $item['name'] . " - " . $item['option_name'];
         $rm_item = [
             "name"=>$item['name'],
             "SKU"=>$item['sku'],

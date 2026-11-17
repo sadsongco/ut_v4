@@ -7,7 +7,7 @@ function getPackageSpecs($cart_contents)
     $items_weight = 0;
     $packaging_classifications = [];
     foreach ($cart_contents['items'] as $item) {
-        if ($item['e_delivery'] == 1 || ($item['option_id'] && $item['option_e_delivery'] == 1)) continue;
+        if ($item['e_delivery'] == 1 || (isset($item['option_id']) && $item['option_id'] && $item['option_e_delivery'] == 1)) continue;
         if (isset($item['ship_with_order']) && $item['ship_with_order'] == 1) {
             return  [
                 "ship_with_order" => true
@@ -70,7 +70,7 @@ function getPackageSpecs($cart_contents)
 function addPackagingClassification ($item, &$packaging_classifications)
 {
     if (isset($item['option_id']) && $item['option_id']) {
-        $item['packaging_classification'] = $item['option_packaging_classification'];
+        if ($item['option_packaging_classification']) $item['packaging_classification'] = $item['option_packaging_classification'];
     }
     if (!isset($packaging_classifications[$item['packaging_classification']])) {
         $packaging_classifications[$item['packaging_classification']] = $item['quantity'];
