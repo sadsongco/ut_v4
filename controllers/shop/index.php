@@ -18,7 +18,6 @@ try {
     $featured = getFeatured($db);
     $items = getItems($db);
     $bundles = getBundles($db);
-    p_2($bundles);
     $categories = getCategories($db);
 } catch (Exception $e) {
     error_log($e);
