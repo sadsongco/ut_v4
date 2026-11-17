@@ -12,7 +12,8 @@ function checkBundleStock($db, $bundle_id) {
     p_2($params);
     try {
         $specified_item_options_stock = $db->query($query, $params)->fetch();
-        echo "SPECIFIED ITEM OPTIONS STOCK: " . $specified_item_options_stock['stock'] . "</br>";
+        echo "SPECIFIED ITEM OPTIONS STOCK: ";
+        p_2($specified_item_options_stock['stock']);
     } catch (Exception $e) {
         error_log($e);
         exit("Error checking bundle stock");
@@ -25,9 +26,12 @@ function checkBundleStock($db, $bundle_id) {
         WHERE Bundle_items.bundle_id = ?
         AND Bundle_items.item_option_id IS NULL";
     $params = [$bundle_id];
+        p_2($query);
+    p_2($params);
     try {
         $non_specified_item_options_stock = $db->query($query, $params)->fetch();
-        echo "NON-SPECIFIED ITEM OPTIONS STOCK: " . $specified_item_options_stock['stock'] . "</br>";
+        echo "NON-SPECIFIED ITEM OPTIONS STOCK: ";
+        p_2($non_specified_item_options_stock['stock']);
 
     } catch (Exception $e) {
         error_log($e);
@@ -41,9 +45,12 @@ function checkBundleStock($db, $bundle_id) {
     WHERE Bundle_items.bundle_id = ?
     AND Bundle_items.item_option_id IS NULL";
     $params = [$bundle_id];
+        p_2($query);
+    p_2($params);
     try {
         $non_option_items_stock = $db->query($query, $params)->fetch();
-        echo "NON OPTION ITEMS STOCK: " . $specified_item_options_stock['stock'] . "</br>";
+        echo "NON OPTION ITEMS STOCK: ";
+        p_2($non_option_items_stock);
 
     } catch (Exception $e) {
         error_log($e);
