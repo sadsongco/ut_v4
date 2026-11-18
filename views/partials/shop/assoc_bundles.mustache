@@ -1,6 +1,11 @@
 {{#assoc_bundles}}
 <section class="show bundles" id="assoc_bundles" hx-swap-oob="true" style="max-height: fit-content;">
+    {{^cart}}
     <h2 class="span2">This item is included in these bundles:</h2>
+    {{/cart}}
+    {{#cart}}
+    <h2 class="span2">One or more of your items is included in these bundles:</h2>
+    {{/cart}}
     {{#bundles}}
     <section class="bundle" hx-get="/shop/bundle/{{bundle_id}}" hx-indicator="#spinner" hx-trigger="load" hx-swap="outerHTML">
         <div class="spinner htmx-indicator" id="spinner">

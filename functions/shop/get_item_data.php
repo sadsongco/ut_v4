@@ -30,7 +30,6 @@ function getItemData($item, $item_details, $db)
             $params = [$item['item_id']];
         }
         $cart_item = $db->query($query, $params)->fetch();
-        if ($item['item_id'] == ARTPRINT_ID) $cart_item['ship_with_order'] = true;
         if (isset($cart_item['option_price']) && $cart_item['option_price']) $cart_item['price'] = number_format($cart_item['option_price'], 2);
         if (isset($cart_item['option_weight']) && $cart_item['option_weight']) $cart_item['weight'] = number_format($cart_item['option_weight'], 2);
         if (isset($cart_item['option_sku']) && $cart_item['option_sku']) $cart_item['sku'] = $cart_item['option_sku'];

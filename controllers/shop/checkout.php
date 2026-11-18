@@ -45,17 +45,6 @@ $shipping_options = [
     "service_name" => "Digital Download",
     "service_code" => "E_DEL"
 ];
-foreach ($cart_contents['items'] as $item) {
-    if (isset($item['ship_with_order']) && $item['ship_with_order'] == true) {
-        $shipping_options = [
-            "shipping_method_id" => 7,
-            "service_name" => "Add to order",
-            "service_code" => "ARTPRINT"
-        ];
-        $_SESSION['package_specs']['ship_with_order'] = true;
-        break;
-    }
-}
 $_SESSION['shipping_method'] = $shipping_options;
 $_SESSION['shipping'] = $shipping = 0;
 $shipping_disp = "0.00";

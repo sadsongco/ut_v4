@@ -20,13 +20,6 @@ $shipping_options = [
     "service_name" => "Digital Download",
     "service_code" => "E_DEL"
 ];
-if (isset($_SESSION['package_specs']['ship_with_order'])) {
-    $shipping_options = [
-        "shipping_method_id" => 7,
-        "service_name" => "Add to order",
-        "service_code" => "ARTPRINT"
-    ];
-}
 
 $_SESSION['shipping_method'] = $shipping_options;
 $_SESSION['shipping'] = $shipping = 0;

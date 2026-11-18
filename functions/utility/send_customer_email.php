@@ -15,7 +15,6 @@ function sendCustomerEmail(array $order, string $template, object $db, object $m
             "success" => "you have placed an order #" . $order['order_no'],
             "shipped" => "your order #" . $order['order_no'] . " has shipped",
             "download" => "download links for your order #" . $order['order_no'],
-            "item_added" => "signed artprint added to your order #" . $order_added_to
         ];
         // create pdf for order
         if ($template == "success" || $template == "item_added") {

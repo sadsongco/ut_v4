@@ -4,15 +4,20 @@ if(session_status() === PHP_SESSION_NONE) session_start();
 
 include_once(__DIR__ . "/../../functions/functions.php");
 include_once(base_path("functions/shop/get_categories.php"));
+include_once(base_path("functions/shop/get_associated_bundles.php"));
 include_once(base_path("functions/shop/get_bundle_data.php"));
 
 use Database\Database;
 $db = new Database('orders');
 
 if(isset($paths[4]) && $paths[4] == "bundles") {
-    $query = "SELECT DISTINCT bundle_id FROM Bundle_items WHERE item_id = ? AND item_option_id = ?";
-    $params = [$paths[2], $paths[3]];
-    $assoc_bundle_ids = $db->query($query, $params)->fetchAll();
+    try {
+        $assoc_bundle_ids = getAssociatedBundles($db, $paths[2], $paths[3]);
+    } catch (Exception $e) {
+        error_log($e);
+        exit("Sorry, there has been a fundamental error.");
+    }
+    
     exit($this->renderer->render("shop/assoc_bundles", [
         "assoc_bundles"=>sizeof($assoc_bundle_ids) > 0,
         "bundles"=>$assoc_bundle_ids,
@@ -52,7 +57,7 @@ foreach($item_options as &$item_option) {
 $query = "SELECT DISTINCT bundle_id FROM Bundle_items WHERE item_id = ? AND item_option_id IS NULL";
 $params = [$paths[2]];
 try {
-    $assoc_bundle_ids = $db->query($query, $params)->fetchAll();
+    $assoc_bundle_ids = getAssociatedBundles($db, $paths[2]);
 } catch (PDOException $e) {
     error_log($e);
     exit("Sorry, there has been a fundamental error.");

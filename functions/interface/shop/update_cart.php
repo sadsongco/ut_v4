@@ -10,10 +10,6 @@ if (!isset($db)) $db = new Database('orders');
 
 if(session_status() === PHP_SESSION_NONE) session_start();
 
-if (isset($_POST['item_id']) && $_POST['item_id'] == ARTPRINT_ID) {
-    exit("<script>alert('You can only order one artprint. Quantity not updated.')</script>");
-}
-
 if (isset($_POST['remove']) || (isset($_POST['update']) && $_POST['quantity'] == 0)) {
     $cart_item_id = isset($_POST['item_id']) ? (int)$_POST['item_id'] : false;
     $cart_option_id = isset($_POST['option_id']) ? (int)$_POST['option_id'] : false;

@@ -39,19 +39,6 @@ function reduceStock($item, $db) {
 
 }
 
-function artprintInCart($db) {
-    // is an artprint in items?
-    if (!isset($_SESSION['items'])) return false;
-    if (isset($_SESSION['items'])) {
-        foreach ($_SESSION['items'] AS $item) {
-            if ($item['item_id'] == ARTPRINT_ID) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
 function getOrderToAddTo($db) {
     $query = "SELECT customer_id FROM Customers WHERE email = ?";
     $customer = $db->query($query, [$_POST['email']])->fetch();
@@ -79,22 +66,6 @@ function getOrderToAddTo($db) {
     return empty($order_id) ? false : $order_id;
 }
 
-function validArtprintOrder($db) {
-    $customer = $db->query("SELECT customer_id FROM Customers WHERE email = ?", [$_POST['email']])->fetch();
-    $open_orders = $db->query("SELECT
-        order_id
-    FROM New_Orders WHERE customer_id = ? AND dispatched IS NULL", [$customer['customer_id']])->fetchAll();
-    if (sizeof($open_orders) == 0) return false;
-    $valid = false;
-    foreach ($open_orders AS $open_order) {
-        $valid_order = $db->query("SELECT COUNT(*) AS count FROM New_Order_items WHERE order_id = ? AND item_id = ?", [$open_order['order_id'], DOUBLE_LP_ID])->fetch();
-        if ($valid_order['count'] > 0) {
-            $valid = true;
-        }
-    }
-    return $valid;
-}
-
 $host = getHost();
 
 $db = new Database('orders');
@@ -106,15 +77,6 @@ if (!isset($_SESSION['items']) && !isset($_SESSION['bundles'])) {
 }
 
 $order_to_add_to = false;
-
-if (artprintInCart($db)) {
-    $order_to_add_to = getOrderToAddTo($db);
-    if (!$order_to_add_to) exit("<script>alert('Orders for artprints are currently only available to customers who have previously ordered a double LP. If there are any left then we will put some signed 2LP versions back in stock ')</script>");
-    else {
-        $_SESSION['order_to_add_to'] = $order_to_add_to['order_id'];
-        $_SESSION['order_no_to_add_to'] = $order_to_add_to['order_no'];
-    }
-}
 
 // reduce stock by item quantity
 try {

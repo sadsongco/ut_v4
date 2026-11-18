@@ -7,6 +7,7 @@
         <section class="cartContainer" hx-get="/functions/shop/cart_items.php" hx-trigger="load, cartUpdated from:body">
         </section>
         {{/cart_contents}}
+        {{>shop/assoc_bundles}}
     {{/empty}}
     {{#empty}}
         <section class="shop-item">
