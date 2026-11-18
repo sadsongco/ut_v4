@@ -24,6 +24,14 @@ try {
     exit("Sorry, there has been a fundamental error.");
 }
 
+foreach ($items as &$item) {
+    if (is_null($item['price']) || $item['price'] == 0) {
+        $price = $item['option']['options'][0]['option_price'];
+        if (is_null($price) || $price == 0) unset($item);
+        else ($item['price'] = number_format($price, 2));
+    }
+}
+
 $env = false;
 if (ENV === 'dev') $env = 'dev';
 
