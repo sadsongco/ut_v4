@@ -115,7 +115,7 @@ class FileUploader
                         "key"=>$key
                     ];
                 }
-                imagedestroy($this->image);
+                unset($this->image);
             }
             else {
                 if (move_uploaded_file($this->uploaded_file, $this->upload_path)) {
