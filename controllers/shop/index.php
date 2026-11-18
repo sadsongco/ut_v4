@@ -8,7 +8,7 @@ use Database\Database;
 $db = new Database('orders');
 
 include_once(__DIR__ . "/../../functions/functions.php");
-if (ENV !== 'dev') exit($this->renderer->render('shop/offline', ["stylesheets"=>["shop"]]));
+// if (ENV !== 'dev') exit($this->renderer->render('shop/offline', ["stylesheets"=>["shop"]]));
 include_once(base_path("functions/shop/get_featured.php"));
 include_once(base_path("functions/shop/get_items.php"));
 include_once(base_path("functions/shop/get_bundles.php"));
