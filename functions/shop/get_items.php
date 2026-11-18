@@ -35,6 +35,13 @@ function getItems($db, $category=null)
         if (sizeof($item_options) > 0) {
             $item['option'] = ['options'=>$item_options];
             $item['option']['select_option'] = true;
+            if (is_null($item['price']) || $item['price'] == 0) {
+                $price = $item['option']['options'][0]['option_price'];
+                if (is_null($price) || $price == 0) {
+                    unset($item);
+                    continue;
+                } else ($item['price'] = number_format($price, 2));
+            }
         }
         if (isset($item['image']) && $item['image'])
             $item['image_path'] = "/serve/" . SHOP_ASSET_PATH . "images/" . str_replace(".", "/", $item['image']);
