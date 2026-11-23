@@ -66,7 +66,8 @@ class ArticleRenderer {
             $this->db->query($query, [$track["token"], $track["media_id"], time(), time()]);
         }
         catch (PDOException $e) {
-            die($e->getMessage());
+            error_log($e);
+            die("There has been a fundamental error. Sorry about that.");
         }
         $track["title"] = str_replace(" ", "_", $track["title"]);
         $track["notes"] = str_replace(" ", "_", $track["notes"]);

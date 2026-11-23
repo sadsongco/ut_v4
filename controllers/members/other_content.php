@@ -35,7 +35,8 @@ try {
     }
 }
 catch (Exception $e) {
-    exit("DATABASE ERROR: " . $e->getMessage());
+    error_log($e);
+    die("There has been a fundamental error. Sorry about that.");
 }
 
 if (isset($paths[2]) && $paths[2] != "") {
@@ -52,7 +53,7 @@ try {
         ORDER BY pub_date DESC", [$sc_id])->fetchAll();
 } catch (PDOException $e) {
     error_log($e);
-    exit("DATABASE ERROR: " . $e->getMessage());
+    die("There has been a fundamental error. Sorry about that.");
 }
 
 echo $m->render("members/other_content", ["other_content"=>$content_data]);

@@ -29,7 +29,8 @@ try {
     }
 }
 catch (Exception $e) {
-    exit("DATABASE ERROR: " . $e->getMessage());
+    error_log($e);
+    die("There has been a fundamental error. Sorry about that.");
 }
 
 if (isset($paths[2]) && $paths[2] != "") {
@@ -42,7 +43,7 @@ try {
     $content_data = $member_db->query("SELECT * FROM Scheduled_Content WHERE scheduled_content_id = ?", [$sc_id])->fetch();
 } catch (PDOException $e) {
     error_log($e);
-    exit("DATABASE ERROR: " . $e->getMessage());
+    die("There has been a fundamental error. Sorry about that.");
 }
 
 $content_data[$content_data['content_type']] = true;

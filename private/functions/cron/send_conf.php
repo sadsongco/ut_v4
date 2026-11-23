@@ -20,7 +20,7 @@ try {
     if (!$row || sizeof($row) == 0) throw new PDOException('Email not found in database');
 } catch (PDOException $e) {
     error_log($e);
-    exit ("Resending of confirmation email failed: " . $e->getMessage());
+    exit ("Resending of confirmation email failed.");
 }
       
 try {
@@ -28,7 +28,7 @@ try {
     if (!$response['success']) throw new Exception($response['status']);
 } catch (Exception $e) {
     error_log($e);
-    exit ("Resending of confirmation email failed: " . $e->getMessage());
+    exit ("Resending of confirmation email failed.");
 }
 
 file_put_contents($log_path, $ids);

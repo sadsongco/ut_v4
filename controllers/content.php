@@ -22,7 +22,7 @@ function getArticle($db, $article_id) {
         return $db->query($query, [$article_id])->fetch();
     }
     catch (PDOException $e) {
-        throw new Exception($e->getMessage());
+        throw new Exception($e);
     }
 }
 
@@ -33,7 +33,7 @@ function getPrevArticle($db, $article_id) {
         return $result['article_id'] ?? false;
     }
     catch (PDOException $e) {
-        throw new Exception($e->getMessage());
+        throw new Exception($e);
     }
 }
 
@@ -44,7 +44,7 @@ function getNextArticle($db, $article_id) {
         return $result['article_id'] ?? false;
     }
     catch (PDOException $e) {
-        throw new Exception($e->getMessage());
+        throw new Exception($e);
     }
 }
 
@@ -70,7 +70,8 @@ try {
     $rendered_article = $renderer->renderArticle();
 }
 catch (Exception $e) {
-    die ("System error: ".$e->getMessage());
+    error_log($e);
+    die("There has been a fundamental error. Sorry about that.");
 }
 
 $blog_stylesheets = ['articles'];

@@ -95,8 +95,8 @@ try {
     }
 }
 catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-    exit();
+    error_log($e);
+    die("There has been a fundamental error. Sorry about that.");
 }
 $order_details = $_POST;
 

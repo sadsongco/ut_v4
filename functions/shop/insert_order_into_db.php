@@ -26,7 +26,7 @@ function insertOrderIntoDB($order_details, $db) {
     } catch (Exception $e) {
             $db->rollback();
             error_log($e);
-            exit("Database update failed: " . $e->getMessage());
+            exit("Database update failed. There has been a fundamental error. Sorry.");
     }
     // $db->rollback();
     $db->commit();

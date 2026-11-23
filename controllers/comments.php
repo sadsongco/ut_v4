@@ -49,7 +49,7 @@ function getReplies ($db, $article_id, $comment_id=null) {
         return ($result);
     }
     catch (Exception $e) {
-        throw new Exception($e->getMessage());
+        throw new Exception($e);
     }
 }
 

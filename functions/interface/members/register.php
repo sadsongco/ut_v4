@@ -60,33 +60,29 @@ try {
         }
         catch (Exception $e) {
             echo "Couldn't send confirmation email: ";
-            echo $e->getMessage();
+            error_log($e);
+            die("There has been a fundamental error. Sorry about that.");
         }
     });
 }
 
 catch (\Delight\Auth\InvalidEmailException $e) {
     echo '<p class="error">Invalid email address</p>';
-    echo $m->render('members/user_register', ["error"=>$e->getMessage()]);
     exit();
 }
 catch (\Delight\Auth\InvalidPasswordException $e) {
     echo '<p class="error">Invalid password</p>';
-    echo $m->render('members/user_register', ["error"=>$e->getMessage()]);
     exit();
 }
 catch (\Delight\Auth\UserAlreadyExistsException $e) {
    echo "<p class='error'>That email is already registered!</p>";
-   echo $m->render('members/user_register', ["error"=>$e->getMessage()]);
    exit();
 }
 catch (\Delight\Auth\DuplicateUsernameException $e) {
    echo "<p class='error'>That username is already registered!</p>";
-   echo $m->render('members/user_register', ["error"=>$e->getMessage()]);
    exit();
 }
 catch (\Delight\Auth\TooManyRequestsException $e) {
-    error_log('Too many requests: '.$e->getMessage());
     echo "There has been an error. Please try again later.";
-    echo $e->getMessage();
+    error_log($e);
 }

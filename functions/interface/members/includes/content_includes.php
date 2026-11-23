@@ -16,6 +16,7 @@ try {
     $auth = new \Delight\Auth\Auth($auth_db);
 }
 catch (Exception $e) {
-    die($e->getMessage());
+    error_log($e);
+    die("There has been a fundamental error. Sorry about that.");
 }
 

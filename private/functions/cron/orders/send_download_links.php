@@ -19,7 +19,9 @@ try {
     $order = getDownloadOrder($order_db_id, $db);
     sendCustomerEmail($order, "download", $db, $m);
 } catch (Exception $e) {
-    echo  "Couldn't update order " . $order_db_id . ": " . $e->getMessage();
+    echo  "Couldn't update order " . $order_db_id;
+    error_log($e);
+    die("There has been a fundamental error. Sorry about that.");
 }
 
 

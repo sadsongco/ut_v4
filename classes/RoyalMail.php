@@ -99,8 +99,8 @@ class RoyalMail {
             $this->getItems();
             if ($this->old_order) $this->order_data['weight'] = getPackageWeight($this->order_data);
         } catch (PDOException $e) {
-            echo $e->getMessage(); 
-        }
+            error_log($e);
+            die("There has been a fundamental error. Sorry about that.");        }
     }
 
     private function getCountryCode ()

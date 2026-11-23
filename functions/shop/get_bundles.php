@@ -23,7 +23,7 @@ function getBundles($db, $category=null)
     try {
         $bundles = $db->query($query, $params)->fetchAll();
     } catch (Exception $e) {
-        error_log($e->getMessage());
+        error_log($e);
         exit("Error getting bundles");
     }
     $return_bundles = [];

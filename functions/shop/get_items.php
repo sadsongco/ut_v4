@@ -13,7 +13,7 @@ function getItems($db, $category=null)
             Items.item_id, Items.name, Items.price, Items.image, Items.featured,
             IFNULL(Items.stock, 0) + (SELECT IFNULL(SUM(Item_options.option_stock), 0) FROM Item_options WHERE Item_options.item_id = Items.item_id) AS stock
             FROM Items
-            WHERE active = 1
+            WHERE Items.active = 1
             $where
             GROUP BY Items.item_id
             ORDER BY featured DESC
@@ -22,7 +22,7 @@ function getItems($db, $category=null)
     try {
         $items = $db->query($query, $params)->fetchAll();
     } catch (PDOException $e) {
-        throw new Exception($e->getMessage());
+        throw new Exception($e);
     }
     foreach ($items as &$item) {
         try {
@@ -30,7 +30,7 @@ function getItems($db, $category=null)
             $params = [$item['item_id']];
             $item_options = $db->query($query, $params)->fetchAll();
         } catch (PDOException $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception($e);
         }
         if (sizeof($item_options) > 0) {
             $item['option'] = ['options'=>$item_options];

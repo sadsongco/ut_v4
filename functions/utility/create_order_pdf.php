@@ -30,7 +30,8 @@ function createOrderPDF($order_id, $db) {
     }
     
     catch (PDOException $e) {
-        echo $e->getMessage();
+        error_log($e);
+        die("There has been a fundamental error. Sorry about that.");
     }
     
     return makeOrderPDF($result, 'F', base_path(ORDER_PDF_PATH));

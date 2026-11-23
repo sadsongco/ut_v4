@@ -112,8 +112,8 @@ try {
     $stmt = $content_db->query($query, $params);
 }
 catch (Exception $e) {
-    echo "Error inserting comment:";
-    die($e->getMessage());
+    error_log($e);
+    die("There has been a fundamental error. Sorry about that.");
 }
 
 header ('HX-Trigger:refreshComments');

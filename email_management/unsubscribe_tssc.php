@@ -28,7 +28,8 @@ if (isset($_GET['email']) && $_GET['email'] != '') {
             $message = "<p>Sorry, there was a background error</p>";
         }
         else {
-            $message =  '<h2>'.$e->getMessage().' - please make sure you have accessed this page through the unsubscribe link provided in your email</h2>';
+            error_log($e);
+            $message =  '<h2>There has been a fundamental error - please make sure you have accessed this page through the unsubscribe link provided in your email</h2>';
         }
     }
 }
