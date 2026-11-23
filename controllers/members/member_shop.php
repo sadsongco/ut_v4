@@ -1,6 +1,9 @@
 <?php
 
 require_once(__DIR__ . "/../../functions/functions.php");
+global $auth;
+
+if (!$auth->isLoggedIn()) header("Location: /members");
 
 use Database\Database;
 $db = new Database('orders');
