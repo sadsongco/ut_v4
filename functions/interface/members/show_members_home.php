@@ -17,13 +17,15 @@ try {
     error_log($e);
     exit("There has been an error. Please contact the webmaster.");
 }
-
 if($result && $result['status']) {
     $subscribed = true;
 }
 if ($result && $result['status'] == "PREMIUM") {
     $premium = true;
 }
+
+$subscribed=false;
+$premium=false;
 
 echo $m->render('members/home_page', [
     "env"=>$env,

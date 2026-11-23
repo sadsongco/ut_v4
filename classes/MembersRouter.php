@@ -31,6 +31,10 @@ class MembersRouter extends Router
         'preview_content' => [
             'name' => 'Preview Content',    
             'controller' => 'members/preview_content'
+        ],
+        'member_shop' => [
+            'name' => 'Member Shop',
+            'controller' => 'members/member_shop'
         ]
     ];
     function __construct($renderer)

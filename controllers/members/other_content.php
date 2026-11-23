@@ -30,8 +30,10 @@ $params = [$period_start, $today, $auth->getUserId()];
 try {
     $result = $member_db->query($query, $params)->fetchAll();
     if (sizeof($result) == 0) {
-        echo $m->render("members/manage_subscription", ["env"=>ENV]);
-        exit("NOT SUBSCRIBED");
+        echo $m->render("members/manage_subscription", [
+            "env"=>ENV,
+            "logged_in"=>$auth->isLoggedIn()]);
+        exit();
     }
 }
 catch (Exception $e) {

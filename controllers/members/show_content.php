@@ -25,7 +25,7 @@ $params = [$period_start, $today, $auth->getUserId()];
 try {
     $result = $member_db->query($query, $params)->fetchAll();
     if (sizeof($result) == 0) {
-        exit("NOT SUBSCRIBED");
+        exit();
     }
 }
 catch (Exception $e) {
