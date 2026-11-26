@@ -5,21 +5,27 @@
     {{#env}}
         {{#logged_in}}
         <h1>Latest Member Content</h1>
-        <section>
-            <h2>Secret order page for 7" single</h2>
-            <a class='button' href="member_shop/">Buy Now</a>
+        <section class="article-container">
+            <article class="article-body">
+                <h2>Secret order page for 7" single</h2>
+                <a class='button' href="member_shop/">Buy Now</a>
+            </article>
         </section>
         {{#subscribed}}
             <section id="member-content" class="content-block" hx-get="/functions/interface/members/member_content.php" hx-trigger="load">
             </section>
         {{/subscribed}}
         {{^subscribed}}
-            <p>You are currently logged in but not subscribed. You can post comments on blog posts, but not see all the exclusive members content like blah blah blah.</p>
+            {{#ignore}}
+            <p>You are currently logged in but not subscribed. You can post comments on blog posts, but not see all the exclusive members content like blah blah blah blah blah.</p>
             <p>Subscribing costs &pound;<span hx-get="/functions/interface/members/get_sub_price.php?form=true&subscription-level=STANDARD" hx-trigger="load"></span> per month (that's &pound;1 plus our credit card and tax costs), and we'll be posting new songs early, video blogs and all sorts of other things that we can think of. If you want to be a premium subscriber that is &pound;<span hx-get="/functions/interface/members/get_sub_price.php?form=true&subscription-level=PREMIUM" hx-trigger="load"></span> per month, and that will allow you to download all of the content (including the new songs) so you don't need to be on our website to listen / watch.</p>
             <p>It gives the band a regular income that we can spend on finishing and promoting the new record, so it is an amazing way to support our music if you can stretch to it. We will do our best to make it good value for money!</p>
             <p>If you'd like to join our lovely community, click <a class="button" href="/members/subscribe">here</a>.</p>
+            {{/ignore}}
         {{/subscribed}}
-        <p>There will be more here in the future. For now you can manage your login.</p>
+        <p>This is the "in progress" members page with everything removed. The idea is to maybe try a subscription, where people can get new tracks, old recordings, special content and all sorts in one place, with regular exclusive updates. But... it might never happen if it feels too nakedly commercial. Anyway, for now there's a link above where you can get the limited edition 7" single before anyone else. It says it won't ship until December 7th, but that's a lie - that's just set up as its release date in the shop. I'll send the orders as soon as I get them.<br>
+        Did anyone read any of this? Let's see. You can also manage your login below if you want.
+        </p>
         <div id="user-management" class="user-management-container" hx-get="/functions/interface/members/manage.php" hx-trigger="load">
         </div>
         {{>logout}}
